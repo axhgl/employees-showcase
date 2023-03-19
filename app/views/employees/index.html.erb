@@ -1,0 +1,63 @@
+<%= turbo_stream_from "employees" %>
+
+<div class="flex flex-col justify-center gap-y-6">
+  <h1 class="text-5xl mb-8">Employees</h1>
+
+  <section class="flex justify-between p-2 border-2 border-blue-200 rounded-md">
+    <%= form_tag(employees_path, method: :get, id: "search-employees", class: "flex flex-col gap-y-2") do %>
+      <%= label_tag(:search_term, "Search Employees by Name or Email:") %>
+      <%= text_field_tag(:search_term) %>
+      <%= submit_tag 'Search', class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+    <% end %>
+
+    <%= form_tag employees_path, method: :get, id: "gender-filter", class: "flex flex-col" do %>
+      <div class="flex gap-2">
+        <%= label_tag "Male" %>
+        <%= radio_button_tag :gender, "male" %>
+        <%= label_tag "Female" %>
+        <%= radio_button_tag :gender, "female" %>
+      </div>
+      <%= submit_tag 'Filter by gender', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <% end %>
+
+    <%= form_tag employees_path, method: :get, id: "age-filter", class: "flex flex-col" do %>
+      <div class="flex gap-2">
+        <%= label_tag "Over 50" %>
+        <%= radio_button_tag :age, "over" %>
+        <%= label_tag "Under 50" %>
+        <%= radio_button_tag :age, "under" %>
+      </div>
+      <%= submit_tag 'Filter by age', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <% end %>
+  </section>
+
+  <div class="flex flex-col gap-y-4">
+    <div>
+      <%= link_to "New employee",
+        new_employee_path,
+        class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded",
+        data: { turbo_frame: dom_id(Employee.new) } %>
+    </div>
+    <div>
+      <%= turbo_frame_tag Employee.new %>
+    </div>
+  </div>
+
+  <%= form_with url: employees_bulk_destroy_path, method: :delete, id: :employees_bulk_destroy_form do |form| %>
+    <%= form.submit "Delete selected employees", class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+  <% end %>
+
+
+  <section class="flex flex-col gap-y-4">
+    <div>
+      <%= turbo_frame_tag "employees" do %>
+        <div class="flex flex-col gap-y-4">
+          <%= render @employees %>
+        </div>
+      <% end %>
+    </div>
+    <div class="self-center">
+      <%= paginate @employees %>
+    </div>
+  </section>
+</div>

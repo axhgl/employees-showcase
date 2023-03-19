@@ -1,0 +1,100 @@
+<%= form_for @employee, html: { id: "new-employee-form", class: "flex flex-col gap-y-4 p-2 border-2 border-green-200 rounded-md" } do |f| %>
+  <% if @employee.errors.any? %>
+    <div class="text-red-500" id="new-employee-errors">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% @employee.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex flex-wrap gap-4">
+    <div class="flex flex-col">
+      <%= f.label :first_name%>
+      <%= f.text_field :first_name %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :age %>
+      <%= f.text_field :age%>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :height %>
+      <%= f.text_field :height %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :male %>
+      <%= f.radio_button :gender, "male" %>
+      <%= f.label :female %>
+      <%= f.radio_button :gender, "female" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :job_title %>
+      <%= f.text_field :job_title %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :company %>
+      <%= f.collection_select :company_id, Company.all, :id, :name %>
+    </div>
+  </div>
+
+  <%= f.fields_for :employee_address, html: { class: "flex flex-wrap gap-4" } do |ea| %>
+    <div class="flex flex-col">
+      <%= f.label :street %>
+      <%= ea.text_field :street, name: "employee_address_street" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :city %>
+      <%= ea.text_field :city, name: "employee_address_city" %>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :employee_bank_information, html: { class: "flex flex-wrap gap-4" } do |ebi| %>
+    <div class="flex flex-col">
+      <%= f.label :card_expiration %>
+      <%= ebi.text_field :card_expiration, name: "employee_bank_information_card_expiration" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :card_number %>
+      <%= ebi.text_field :card_number, name: "employee_bank_information_card_number" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :card_type %>
+      <%= ebi.text_field :card_type, name: "employee_bank_information_card_type" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :currency %>
+      <%= ebi.text_field :currency, name: "employee_bank_information_currency" %>
+    </div>
+
+    <div class="flex flex-col">
+      <%= f.label :iban %>
+      <%= ebi.text_field :iban, name: "employee_bank_information_iban" %>
+    </div>
+  <% end %>
+
+  <div class="flex justify-center gap-x-8">
+    <%= link_to "Cancel", employees_path, class: "bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded" %>
+    <%= f.submit "Save", class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+<% end %>

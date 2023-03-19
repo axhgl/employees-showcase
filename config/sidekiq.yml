@@ -1,0 +1,4 @@
+:concurrency: 5
+:queues:
+  - remote_data_fetch
+  - email

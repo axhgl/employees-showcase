@@ -1,0 +1,9 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to employees"), employees_path %>
+
+  <h1>Edit quote</h1>
+
+  <%= turbo_frame_tag @employee do %>
+    <%= render "form", employee: @employee %>
+  <% end %>
+</main>

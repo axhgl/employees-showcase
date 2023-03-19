@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version:
 
-Things you may want to cover:
+ruby 3.0.5
 
-* Ruby version
+## Rails version:
 
-* System dependencies
+Rails 7.0.4
 
-* Configuration
+## Run the following command to install the project dependencies:
 
-* Database creation
+`bundle install`
 
-* Database initialization
+## Run the following commands to setup the database:
 
-* How to run the test suite
+```
+bin/rails db:create
+bin/rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Run the following command to run the Rails server, Sidekiq workers, and the TailwindCSS watch process:
 
-* Deployment instructions
+`bin/dev`
 
-* ...
+## To run the automated test suite, execute the following command:
+
+`bundle exec rspec`

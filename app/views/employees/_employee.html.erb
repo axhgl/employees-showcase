@@ -1,0 +1,40 @@
+<%= turbo_frame_tag employee do %>
+  <% cache employee, expires_in: 5.minutes  do %>
+    <div class="flex justify-between border-2 border-black rounded-md p-2 mb-2" >
+      <div class="flex flex-col gap-y-2">
+        <span> 
+          Name: <%= link_to employee.full_name,
+            employee_path(employee),
+            class: "text-blue-500 underline",
+            data: { turbo_frame: "_top" } %>
+        </span>
+        <span>
+          Email: <%= employee.email %> 
+        </span>
+        <span>
+          Gender: <%= employee.gender %>
+        </span>
+        <span>
+          Age: <%= employee.age %>
+        </span>
+        <span>
+          Company: <%= employee.company.name %>
+        </span>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <label>
+          <%= check_box_tag "employee_ids[]", employee.id, nil, { multiple: true, form: :employees_bulk_destroy_form } %>
+        </label>
+        <%= button_to "Delete",
+          employee_path(employee),
+          class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded",
+          method: :delete %>
+        <%= link_to "Edit",
+          edit_employee_path(employee),
+          id: employee.id,
+          class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+        %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
